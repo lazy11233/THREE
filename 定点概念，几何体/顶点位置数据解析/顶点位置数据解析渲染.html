@@ -13,18 +13,36 @@
   </style>
 </head>
 <body>
-  <script src="./three.js-dev/build/three.js"></script>
-  <script src="./three.js-dev/examples/js/controls/OrbitControls.js"></script>
+  <script src="../../three.js-dev/build/three.js"></script>
+  <script src="../../three.js-dev/examples/js/controls/OrbitControls.js"></script>
   <script>
     /* 1. 创建场景对象 */
     const scene = new THREE.Scene();
     /* 2. 创建网格模型 */
-    const geometry = new THREE.BoxGeometry(100, 100, 100); // 创建一个立方体几何模型
-    const material = new THREE.MeshLambertMaterial({
+    // const geometry = new THREE.BoxGeometry(100, 100, 100); // 创建一个立方体几何模型
+    const material = new THREE.MeshBasicMaterial({
       color: 0x0000ff, // 蓝色
+      side: THREE.DoubleSide
     });
+
+    const geometry = new THREE.BufferGeometry()
+    const vertices = new Float32Array([
+      0, 0, 0,
+      50, 0, 0,
+      0, 100, 0,
+      0, 0, 10,
+      0, 0, 100,
+      50, 0, 10
+    ])
+
+    const attribute = new THREE.BufferAttribute(vertices, 3)
+
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
+    console.log(geometry)
+
+
+
     // 点光源
     const point = new THREE.PointLight(0xffffff);
     point.position.set(400, 200, 300);
@@ -32,6 +50,9 @@
     // 环境光
     const ambient = new THREE.AmbientLight(0x444444);
     scene.add(ambient);
+
+    const axisHelper = new THREE.AxesHelper(250)
+    scene.add(axisHelper)
 
     /* 3. 相机设置 */
     const width = window.innerWidth;
