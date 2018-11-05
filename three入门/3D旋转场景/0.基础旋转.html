@@ -50,7 +50,7 @@
     function customRender() {
       renderer.render(scene, camera)
       mesh.rotateY(0.01)
-      requestAnimationFrame(customRender)
+      requestAnimationFrame(customRender) // 请求浏览器执行下一帧动画
     }
     customRender()
   </script>
