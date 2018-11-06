@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>顶点法向量光照计算</title>
+  <title>3维场景旋转</title>
   <style>
     body {
       margin: 0;
@@ -19,35 +19,38 @@
     /* 1. 创建场景对象 */
     const scene = new THREE.Scene();
     /* 2. 创建网格模型 */
-
     const geometry = new THREE.BufferGeometry()
     const vertices = new Float32Array([
       0, 0, 0,
-      50, 0, 0,
-      0, 100, 0,
-      0, 0, 0,
-      0, 0, 100,
-      50, 0, 0
+      80, 0, 0,
+      80, 80, 0,
+      0, 80, 0,
     ])
     geometry.attributes.position = new THREE.BufferAttribute(vertices, 3)
 
-    // 设置每个顶点的法向量
     const normals = new Float32Array([
       0, 0, 1,
       0, 0, 1,
       0, 0, 1,
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0
+      0, 0, 1,
     ])
     geometry.attributes.normal = new THREE.BufferAttribute(normals, 3)
-    // 材料对象
+
+    const indexes = new Uint16Array([
+      0, 1, 2, 0, 2, 3
+    ])
+
+    geometry.index = new THREE.BufferAttribute(indexes, 1)
+
     const material = new THREE.MeshLambertMaterial({
       color: 0x0000ff,
       side: THREE.DoubleSide
     })
     const mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
+
+    const axisHelper = new THREE.AxisHelper(250)
+    scene.add(axisHelper)
     // 点光源
     const point = new THREE.PointLight(0xffffff);
     point.position.set(400, 200, 300);

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>顶点法向量光照计算</title>
+  <title>矩形非索引绘制</title>
   <style>
     body {
       margin: 0;
@@ -19,29 +19,29 @@
     /* 1. 创建场景对象 */
     const scene = new THREE.Scene();
     /* 2. 创建网格模型 */
-
     const geometry = new THREE.BufferGeometry()
+    // 设置顶点位置
     const vertices = new Float32Array([
       0, 0, 0,
-      50, 0, 0,
-      0, 100, 0,
-      0, 0, 0,
-      0, 0, 100,
-      50, 0, 0
+      80, 0, 0,
+      80, 80, 0,
+      // 0, 0, 0,
+      // 80, 80, 0,
+      // 0, 80, 0,
     ])
     geometry.attributes.position = new THREE.BufferAttribute(vertices, 3)
 
-    // 设置每个顶点的法向量
     const normals = new Float32Array([
       0, 0, 1,
       0, 0, 1,
       0, 0, 1,
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0
+
+      // 0, 0, 1,
+      // 0, 0, 1,
+      // 0, 0, 1,
     ])
     geometry.attributes.normal = new THREE.BufferAttribute(normals, 3)
-    // 材料对象
+    // 材质对象
     const material = new THREE.MeshLambertMaterial({
       color: 0x0000ff,
       side: THREE.DoubleSide
@@ -52,6 +52,10 @@
     const point = new THREE.PointLight(0xffffff);
     point.position.set(400, 200, 300);
     scene.add(point);
+
+    const axisHelper = new THREE.AxisHelper(250)
+    scene.add(axisHelper)
+
     // 环境光
     const ambient = new THREE.AmbientLight(0x444444);
     scene.add(ambient);
