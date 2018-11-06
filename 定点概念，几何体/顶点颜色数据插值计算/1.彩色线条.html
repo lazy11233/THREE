@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>3维场景旋转</title>
+  <title>彩色线条</title>
   <style>
     body {
       margin: 0;
@@ -20,35 +20,39 @@
     const scene = new THREE.Scene();
     /* 2. 创建网格模型 */
     const geometry = new THREE.BufferGeometry()
-    var vertices = new Float32Array([
-      0, 0, 0,
-      50, 0, 0,
-      0, 100, 0,
-      0, 0, 10,
-      0, 0, 100,
-      50, 0, 10,
+
+    const vertices = new Float32Array([
+      0,0,0,
+      200,200,200,
     ])
-    // 创建对象缓冲区
     geometry.attributes.position = new THREE.BufferAttribute(vertices, 3)
 
+    const colors = new Float32Array([
+      1, 0, 0,
+      0, 0, 1
+    ])
 
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x0000ff,
-      side: THREE.DoubleSide
+    geometry.attributes.color = new THREE.BufferAttribute(colors, 3)
+
+    //材质对象
+    const material = new THREE.LineBasicMaterial({
+
+      vertexColors: THREE.VertexColors
     })
+    const line = new THREE.Line(geometry, material)
+    scene.add(line)
 
-    const mesh = new THREE.Mesh(geometry, material)
-    scene.add(mesh)
-    // 点光源
-    // const point = new THREE.PointLight(0xffffff);
-    // point.position.set(400, 200, 300);
-    // scene.add(point);
-    // // 环境光
-    // const ambient = new THREE.AmbientLight(0x444444);
-    // scene.add(ambient);
-
-    const axisHelper = new THREE.AxesHelper(250)
+    //辅助坐标
+    const axisHelper = new THREE.AxisHelper(250)
     scene.add(axisHelper)
+
+    // 点光源
+    const point = new THREE.PointLight(0xffffff);
+    point.position.set(400, 200, 300);
+    scene.add(point);
+    // 环境光
+    const ambient = new THREE.AmbientLight(0x444444);
+    scene.add(ambient);
 
     /* 3. 相机设置 */
     const width = window.innerWidth;
