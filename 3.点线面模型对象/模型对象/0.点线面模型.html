@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3维场景旋转</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <script src="../../three.js-dev/build/three.js"></script>
+  <script src="../../three.js-dev/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    /* 1. 创建场景对象 */
+    const scene = new THREE.Scene();
+    /* 2. 创建网格模型 */
+    const geometry = new THREE.BoxGeometry(100, 100, 100); // 创建一个立方体几何模型
+    const material = new THREE.PointsMaterial({
+      color: 0x0000ff, // 蓝色
+      size: 5.0
+    });
+    const mesh = new THREE.Points(geometry, material);
+    scene.add(mesh);
+    // 点光源
+    const point = new THREE.PointLight(0xffffff);
+    point.position.set(400, 200, 300);
+    scene.add(point);
+    // 环境光
+    const ambient = new THREE.AmbientLight(0x444444);
+    scene.add(ambient);
+
+    /* 3. 相机设置 */
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const k = width / height;
+    const s = 200; // 三维场景显示控制范围系数，系数越大，显示范围越大
+    // 创建相机对象
+    const camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+    camera.position.set(200, 300, 200); // 设置相机位置
+    camera.lookAt(scene.position);
+    /* 创建渲染器对象 */
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(width, height);
+    renderer.setClearColor(0xb9d3ff);
+    document.body.appendChild(renderer.domElement);
+
+    function customRender() {
+      renderer.render(scene, camera);
+      // mesh.rotateY(0.01);
+      requestAnimationFrame(customRender);
+    }
+
+    customRender();
+
+    const controller = new THREE.OrbitControls(camera);
+    controller.addEventListener('change', customRender);
+  </script>
+</body>
+</html>
