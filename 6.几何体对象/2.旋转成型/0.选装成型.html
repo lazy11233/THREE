@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>贝塞尔曲线</title>
+  <title>3维场景旋转</title>
   <style>
     body {
       margin: 0;
@@ -19,27 +19,13 @@
     /* 1. 创建场景对象 */
     const scene = new THREE.Scene();
     /* 2. 创建网格模型 */
-    const path = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-10, -50, -50),
-      new THREE.Vector3(10, 0, 0),
-      new THREE.Vector3(8, 50, 50),
-      new THREE.Vector3(-5, 0, 100)
-    ])
-    const geometry = new THREE.TubeGeometry(path, 40, 2, 25)
-
-
-    const material = new THREE.MeshPhongMaterial({
-      color: 0x0000ff,
-      side:THREE.DoubleSide,
-      wireframe: true
-    })
-    // const line = new THREE.Line(geometry, material)
-    // scene.add(line)
-    const mesh = new THREE.Mesh(geometry, material)
-    scene.add(mesh)
-
-    const asesHelper = new THREE.AxesHelper(250)
-    scene.add(asesHelper)
+    const geometry = new THREE.BoxGeometry(100, 100, 100); // 创建一个立方体几何模型
+    const material = new THREE.MeshLambertMaterial({
+      color: 0x0000ff, // 蓝色
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    // 点光源
     const point = new THREE.PointLight(0xffffff);
     point.position.set(400, 200, 300);
     scene.add(point);
