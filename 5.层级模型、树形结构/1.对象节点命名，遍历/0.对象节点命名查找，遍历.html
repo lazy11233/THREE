@@ -106,8 +106,17 @@
 
     const personGroup = new THREE.Group()
     personGroup.add(headGroup, bodyGroup)
-    personGroup.translateY(50)
+    personGroup.translateY(100)
     People.scene.add(personGroup)
+
+    People.scene.traverse(obj => {
+      if(obj.type === 'Mesh') {
+        obj.material.color.set(0xffff00)
+      }
+      if(obj.name === '左眼' || obj.name === '右眼') {
+        obj.material.color.set(0x000000)
+      }
+    })
 
   </script>
 
